@@ -4,35 +4,40 @@ import React from 'react';
 import styled from 'styled-components';
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
 import { darken } from 'polished';
 
 interface FormData {
   checkIn: Date | null;
   checkOut: Date | null;
-  guests: number;
+  adults: number;
+  children: number;
 }
 
 const BookingWidgetContainer = styled.div`
   position: absolute;
-  top: 120px;
-  right: 50px;
-  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
   padding: ${({ theme }) => theme.spacing.lg};
   border-radius: 12px;
   box-shadow: ${({ theme }) => theme.shadows.lg};
   z-index: 100;
-  width: 320px;
+  width: 400px;
   font-family: ${({ theme }) => theme.fonts.main};
-  
+  backdrop-filter: blur(10px);
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     position: relative;
     top: 0;
-    right: 0;
+    left: 0;
+    transform: none;
     margin: ${({ theme }) => theme.spacing.lg} auto;
     width: calc(100% - 2rem);
     max-width: 400px;
+    background: white;
   }
 `;
 
@@ -52,7 +57,7 @@ const DatePickerWrapper = styled.div`
   .react-datepicker-wrapper {
     width: 100%;
   }
-  
+
   .react-datepicker__input-container input {
     width: 100%;
     padding: ${({ theme }) => theme.spacing.sm};
@@ -60,7 +65,7 @@ const DatePickerWrapper = styled.div`
     border-radius: 6px;
     font-size: ${({ theme }) => theme.sizes.sm};
     font-family: ${({ theme }) => theme.fonts.main};
-    
+
     &:focus {
       border-color: ${({ theme }) => theme.palette.coral};
       outline: none;
@@ -77,7 +82,7 @@ const StyledSelect = styled.select`
   font-size: ${({ theme }) => theme.sizes.sm};
   font-family: ${({ theme }) => theme.fonts.main};
   background: white;
-  
+
   &:focus {
     border-color: ${({ theme }) => theme.palette.coral};
     outline: none;
@@ -86,7 +91,7 @@ const StyledSelect = styled.select`
 `;
 
 const SubmitButton = styled.button`
-  background: ${({ theme }) => theme.palette.coral};
+  background: #ed6664;
   color: white;
   border: none;
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
@@ -100,9 +105,9 @@ const SubmitButton = styled.button`
   margin-top: ${({ theme }) => theme.spacing.sm};
 
   &:hover {
-    background: ${({ theme }) => darken(0.1, theme.palette.coral)};
+    background: ${darken(0.1, '#ed6664')};
   }
-  
+
   &:disabled {
     background: #ccc;
     cursor: not-allowed;
@@ -124,14 +129,23 @@ const BookingWidget: React.FC = () => {
   const checkInDate = watch('checkIn');
 
   const onSubmit = (data: FormData) => {
-    const { checkIn, checkOut, guests } = data;
+    const { checkIn, checkOut, adults, children } = data;
     if (!checkIn || !checkOut) {
-      return; // Form validation should prevent this
+      alert('Please select both check-in and check-out dates');
+      return;
     }
+
+    // Basic validation - ensure at least one adult is selected
+    if (!adults || adults === 0) {
+      alert('Please select at least one adult');
+      return;
+    }
+
     const queryParams = new URLSearchParams({
       checkIn: checkIn.toISOString(),
       checkOut: checkOut.toISOString(),
-      guests: guests.toString(),
+      adults: adults.toString(),
+      children: children.toString(),
     });
     router.push(`/bungalows?${queryParams.toString()}`);
   };
@@ -150,11 +164,11 @@ const BookingWidget: React.FC = () => {
             render={({ field }) => (
               <DatePickerWrapper>
                 <DatePicker
-                  placeholderText="Select check-in date"
+                  placeholderText="DD MMM YYYY"
                   selected={field.value}
                   onChange={field.onChange}
                   minDate={new Date()}
-                  dateFormat="MMM dd, yyyy"
+                  dateFormat="dd MMM yyyy"
                 />
               </DatePickerWrapper>
             )}
@@ -166,44 +180,66 @@ const BookingWidget: React.FC = () => {
             name="checkOut"
             control={control}
             defaultValue={null}
-            rules={{ 
+            rules={{
               required: 'Please select a check-out date',
-              validate: value => {
+              validate: (value) => {
                 if (!checkInDate || !value) return true;
-                return value > checkInDate || 'Check-out must be after check-in';
-              }
+                return (
+                  value > checkInDate || 'Check-out must be after check-in'
+                );
+              },
             }}
             render={({ field }) => (
               <DatePickerWrapper>
                 <DatePicker
-                  placeholderText="Select check-out date"
+                  placeholderText="DD MMM YYYY"
                   selected={field.value}
                   onChange={field.onChange}
                   minDate={checkInDate || new Date()}
-                  dateFormat="MMM dd, yyyy"
+                  dateFormat="dd MMM yyyy"
                 />
               </DatePickerWrapper>
             )}
           />
         </FormField>
         <FormField>
-          <Label>Guests</Label>
+          <Label>Adults</Label>
           <Controller
-            name="guests"
+            name="adults"
             control={control}
             defaultValue={1}
+            rules={{ required: 'Please select number of adults' }}
             render={({ field }) => (
               <StyledSelect {...field}>
+                <option value="">Any</option>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
                   <option key={number} value={number}>
-                    {number} {number === 1 ? 'Guest' : 'Guests'}
+                    {number} {number === 1 ? 'Adult' : 'Adults'}
                   </option>
                 ))}
               </StyledSelect>
             )}
           />
         </FormField>
-        <SubmitButton type="submit">Book Now</SubmitButton>
+        <FormField>
+          <Label>Children</Label>
+          <Controller
+            name="children"
+            control={control}
+            defaultValue={0}
+            render={({ field }) => (
+              <StyledSelect {...field}>
+                <option value="">Any</option>
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                  <option key={number} value={number}>
+                    {number} {number === 1 ? 'Child' : 'Children'}
+                  </option>
+                ))}
+              </StyledSelect>
+            )}
+          />
+        </FormField>
+        <SubmitButton type="submit">Search</SubmitButton>
       </form>
     </BookingWidgetContainer>
   );

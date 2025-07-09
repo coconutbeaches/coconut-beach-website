@@ -99,12 +99,13 @@ const Logo = styled.div`
   }
 `;
 
-const Navigation = styled.nav<{ isOpen: boolean }>`
+const Navigation = styled.nav<{ $isOpen: boolean }>`
   display: flex;
   gap: 2rem;
 
   @media (max-width: 991px) {
-    display: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? 'flex' : 'none')};
+    display: ${({ $isOpen }: { $isOpen: boolean }) =>
+      $isOpen ? 'flex' : 'none'};
     flex-direction: column;
     position: absolute;
     top: 100%;
@@ -190,8 +191,10 @@ const Header: React.FC = () => {
             <a href="mailto:info@coconutbeachkohphangan.com">
               ✉️ info@coconutbeachkohphangan.com
             </a>
+            <a href="https://goo.gl/maps/example">
+              📍 Salad Beach, Koh Phangan, Thailand
+            </a>
           </ContactInfo>
-          <div>📍 Salad Beach, Koh Phangan, Thailand</div>
         </TopBarContent>
       </TopBar>
 
@@ -206,7 +209,7 @@ const Header: React.FC = () => {
             {isMenuOpen ? '✕' : '☰'}
           </MobileMenuButton>
 
-          <Navigation isOpen={isMenuOpen}>
+          <Navigation $isOpen={isMenuOpen}>
             <NavLink onClick={() => scrollToSection('home')}>Home</NavLink>
             <NavLink onClick={() => scrollToSection('about')}>About</NavLink>
             <NavLink onClick={() => scrollToSection('bungalows')}>

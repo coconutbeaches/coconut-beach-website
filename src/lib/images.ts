@@ -1,10 +1,20 @@
-import heroBeachPlaceholder from '/public/images/hero-beach.svg';
-import seaview2BedPlaceholder from '/public/images/seaview-2bed.svg';
-import beachfrontHousePlaceholder from '/public/images/beachfront-house.svg';
-import seaviewJunglePlaceholder from '/public/images/seaview-jungle.svg';
-import twoBedroomTwoBathPlaceholder from '/public/images/2bed-2bath.svg';
-import a3BungalowPlaceholder from '/public/images/a3-bungalow.svg';
-import aboutResortPlaceholder from '/public/images/about-resort.svg';
+// Simple base64 encoded blur data URLs for placeholders
+const blurDataURLs = {
+  heroBeach:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM0NjgyQjQiLz48L3N2Zz4=',
+  seaview2Bed:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+  beachfrontHouse:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+  seaviewJungle:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+  twoBedroomTwoBath:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+  a3Bungalow:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+  aboutResort:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNDY4MkI0Ii8+PC9zdmc+',
+};
 
 // High-quality image imports (when available)
 // For now, these will point to JPG placeholders, but can be easily updated to real images
@@ -30,8 +40,8 @@ export const images = {
     src: heroBeachImage,
     width: 1920,
     height: 1080,
-    blurDataURL: heroBeachPlaceholder,
-    placeholder: heroBeachPlaceholder,
+    blurDataURL: blurDataURLs.heroBeach,
+    placeholder: '/images/hero-beach.svg',
     alt: 'Coconut Beach beachfront view with crystal clear waters and tropical landscape',
     priority: true, // Above-the-fold hero image
   },
@@ -39,8 +49,8 @@ export const images = {
     src: seaview2BedImage,
     width: 800,
     height: 600,
-    blurDataURL: seaview2BedPlaceholder,
-    placeholder: seaview2BedPlaceholder,
+    blurDataURL: blurDataURLs.seaview2Bed,
+    placeholder: '/images/seaview-2bed.svg',
     alt: 'Seaview 2-bedroom bungalow with ocean views and tropical décor',
     priority: false,
   },
@@ -48,8 +58,8 @@ export const images = {
     src: beachfrontHouseImage,
     width: 800,
     height: 600,
-    blurDataURL: beachfrontHousePlaceholder,
-    placeholder: beachfrontHousePlaceholder,
+    blurDataURL: blurDataURLs.beachfrontHouse,
+    placeholder: '/images/beachfront-house.svg',
     alt: 'Beachfront house accommodation with direct beach access',
     priority: false,
   },
@@ -57,8 +67,8 @@ export const images = {
     src: seaviewJungleImage,
     width: 800,
     height: 600,
-    blurDataURL: seaviewJunglePlaceholder,
-    placeholder: seaviewJunglePlaceholder,
+    blurDataURL: blurDataURLs.seaviewJungle,
+    placeholder: '/images/seaview-jungle.svg',
     alt: 'Jungle retreat bungalow surrounded by tropical vegetation',
     priority: false,
   },
@@ -66,8 +76,8 @@ export const images = {
     src: twoBedroomTwoBathImage,
     width: 800,
     height: 600,
-    blurDataURL: twoBedroomTwoBathPlaceholder,
-    placeholder: twoBedroomTwoBathPlaceholder,
+    blurDataURL: blurDataURLs.twoBedroomTwoBath,
+    placeholder: '/images/2bed-2bath.svg',
     alt: 'Two-bedroom two-bathroom family suite with modern amenities',
     priority: false,
   },
@@ -75,8 +85,8 @@ export const images = {
     src: a3BungalowImage,
     width: 800,
     height: 600,
-    blurDataURL: a3BungalowPlaceholder,
-    placeholder: a3BungalowPlaceholder,
+    blurDataURL: blurDataURLs.a3Bungalow,
+    placeholder: '/images/a3-bungalow.svg',
     alt: 'Premium A3 bungalow with traditional Thai architecture',
     priority: false,
   },
@@ -84,8 +94,8 @@ export const images = {
     src: aboutResortImage,
     width: 800,
     height: 600,
-    blurDataURL: aboutResortPlaceholder,
-    placeholder: aboutResortPlaceholder,
+    blurDataURL: blurDataURLs.aboutResort,
+    placeholder: '/images/about-resort.svg',
     alt: 'About Coconut Beach Resort - eco-friendly beachfront accommodation',
     priority: false,
   },
@@ -106,14 +116,14 @@ export const getResponsiveSizes = (breakpoints: {
   default?: string;
 }) => {
   const sizes = [];
-  
+
   if (breakpoints.xs) sizes.push(`(max-width: 575px) ${breakpoints.xs}`);
   if (breakpoints.sm) sizes.push(`(max-width: 767px) ${breakpoints.sm}`);
   if (breakpoints.md) sizes.push(`(max-width: 991px) ${breakpoints.md}`);
   if (breakpoints.lg) sizes.push(`(max-width: 1199px) ${breakpoints.lg}`);
   if (breakpoints.xl) sizes.push(`(max-width: 1399px) ${breakpoints.xl}`);
-  
+
   sizes.push(breakpoints.default || '100vw');
-  
+
   return sizes.join(', ');
 };

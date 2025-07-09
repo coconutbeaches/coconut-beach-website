@@ -14,17 +14,29 @@ const NavbarContainer = styled(motion.nav)<{ $isScrolled: boolean }>`
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: box-shadow 0.3s ease;
-  box-shadow: ${({ $isScrolled }) => 
-    $isScrolled ? '0 4px 20px rgba(0, 0, 0, 0.1)' : '0 2px 4px rgba(0, 0, 0, 0.05)'};
+  transition: all 0.3s ease;
+  box-shadow: ${({ $isScrolled }) =>
+    $isScrolled
+      ? '0 4px 20px rgba(0, 0, 0, 0.15)'
+      : '0 2px 4px rgba(0, 0, 0, 0.05)'};
+
+  /* Ensure fixed position behavior on scroll */
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(0);
+  }
 `;
 
 const TopBar = styled.div`
-  background: #2c3e50;
-  color: white;
+  background: #ffffff;
+  color: #333;
   padding: 8px 0;
   font-size: 14px;
-  
+  border-bottom: 1px solid #e0e0e0;
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -41,15 +53,16 @@ const TopBarContent = styled.div`
 
 const ContactInfo = styled.div`
   display: flex;
-  gap: 30px;
-  
+  gap: 25px;
+
   a {
-    color: white;
+    color: #333;
     text-decoration: none;
     transition: color 0.3s;
-    
+    font-size: 14px;
+
     &:hover {
-      color: #3498db;
+      color: #ed6664;
     }
   }
 `;
@@ -60,9 +73,9 @@ const MainNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 15px 20px;
   position: relative;
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     justify-content: center;
   }
@@ -72,29 +85,40 @@ const Logo = styled.div`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     position: static;
     transform: none;
   }
-  
+
+  img {
+    height: 40px;
+    width: auto;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+      height: 35px;
+    }
+  }
+
   h1 {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 600;
     color: #2c3e50;
     margin: 0;
-    
+    font-family: 'Dancing Script', cursive;
+
     @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      font-size: 24px;
+      font-size: 32px;
       text-align: center;
     }
   }
-  
+
   p {
     color: #7f8c8d;
     font-size: 14px;
     margin: 5px 0 0 0;
-    
+    display: none;
+
     @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
       text-align: center;
     }
@@ -103,9 +127,9 @@ const Logo = styled.div`
 
 const Navigation = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 35px;
   margin-left: auto;
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -120,20 +144,20 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
   transition: color 0.3s ease;
   padding: 0.5rem 0;
   border-radius: 4px;
-  
+
   &:hover {
     color: #ed6664;
   }
-  
+
   &:focus {
     outline: 2px solid #ed6664;
     outline-offset: 2px;
   }
-  
+
   &:focus:not(:focus-visible) {
     outline: none;
   }
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -144,12 +168,14 @@ const NavLink = styled(Link)<{ $isActive: boolean }>`
     background: #ed6664;
     transition: width 0.3s ease;
   }
-  
+
   &:hover::after {
     width: 100%;
   }
-  
-  ${({ $isActive }) => $isActive && `
+
+  ${({ $isActive }) =>
+    $isActive &&
+    `
     &::after {
       width: 100%;
     }
@@ -165,11 +191,11 @@ const MobileMenuButton = styled.button`
   padding: 8px;
   border-radius: 4px;
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
     position: absolute;
@@ -186,7 +212,7 @@ const HamburgerIcon = styled.div<{ $isOpen: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
   span {
     display: block;
     height: 2px;
@@ -196,8 +222,10 @@ const HamburgerIcon = styled.div<{ $isOpen: boolean }>`
     transition: all 0.3s ease;
     transform-origin: center;
   }
-  
-  ${({ $isOpen }) => $isOpen && `
+
+  ${({ $isOpen }) =>
+    $isOpen &&
+    `
     span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
@@ -220,7 +248,7 @@ const MobileMenuOverlay = styled(motion.div)`
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  
+
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -240,7 +268,7 @@ const MobileMenuDrawer = styled(motion.div)`
   flex-direction: column;
   gap: 20px;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-  
+
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
@@ -274,7 +302,7 @@ const MobileCloseButton = styled.button`
   justify-content: center;
   border-radius: 4px;
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
@@ -294,22 +322,22 @@ const MobileNavLink = styled(Link)<{ $isActive: boolean }>`
   border-bottom: 1px solid #ecf0f1;
   transition: all 0.3s ease;
   border-radius: 4px;
-  
+
   &:hover {
     color: #ed6664;
     background-color: rgba(237, 102, 100, 0.05);
   }
-  
+
   &:focus {
     outline: 2px solid #ed6664;
     outline-offset: 2px;
     background-color: rgba(237, 102, 100, 0.1);
   }
-  
+
   &:focus:not(:focus-visible) {
     outline: none;
   }
-  
+
   &:last-child {
     border-bottom: none;
   }
@@ -324,7 +352,7 @@ const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { isScrolled } = useScroll(10);
   const focusTrapRef = useFocusTrap(isMenuOpen);
-  
+
   // Enhanced keyboard navigation for mobile menu
   useKeyboardNavigation(focusTrapRef, {
     isOpen: isMenuOpen,
@@ -388,28 +416,32 @@ const Navbar: React.FC = () => {
           duration: 0.3,
           ease: 'easeInOut',
         }}
+        className={isScrolled ? 'fixed' : ''}
       >
         <TopBar>
           <TopBarContent>
             <ContactInfo>
-              <a href="tel:+66812345678">📞 +66 81 234 5678</a>
-              <a href="mailto:info@coconutbeachkohphangan.com">✉️ info@coconutbeachkohphangan.com</a>
+              <a href="tel:+66092625572">📞 +66092625572</a>
+              <a href="mailto:info@coconutbeachkohphangan.com">
+                ✉️ info@coconutbeachkohphangan.com
+              </a>
             </ContactInfo>
-            <div>📍 Salad Beach, Koh Phangan, Thailand</div>
+            <div style={{ color: '#ed6664' }}>
+              📍 113/9 Moo 7, Koh Phangan, Surat Thani 84280, Thailand
+            </div>
           </TopBarContent>
         </TopBar>
-        
+
         <NavWrapper>
           <MainNav>
             <Logo>
               <Link href="/" style={{ textDecoration: 'none' }}>
-                <h1>Coconut Beach Bungalows</h1>
-                <p>Eco-friendly beachfront accommodation in Koh Phangan</p>
+                <h1>Coconut Beach</h1>
               </Link>
             </Logo>
-            
-            <MobileMenuButton 
-              onClick={toggleMenu} 
+
+            <MobileMenuButton
+              onClick={toggleMenu}
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
@@ -420,7 +452,7 @@ const Navbar: React.FC = () => {
                 <span></span>
               </HamburgerIcon>
             </MobileMenuButton>
-            
+
             <Navigation>
               {navigationLinks.map((link) => (
                 <NavLink
@@ -468,7 +500,7 @@ const Navbar: React.FC = () => {
                   ✕
                 </MobileCloseButton>
               </MobileMenuHeader>
-              
+
               <MobileNavLinks>
                 {navigationLinks.map((link) => (
                   <MobileNavLink

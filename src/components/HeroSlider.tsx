@@ -1,11 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Slider from 'react-slick';
-import { OptimizedImage } from './OptimizedImage';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+
 import { mediaQuery, responsiveFontSizes } from '../styles/responsive';
 
 const HeroSliderContainer = styled.div`
@@ -36,38 +42,34 @@ const HeroSliderContainer = styled.div`
     max-height: 300px;
   `}
 
-  .slick-slider {
+  .swiper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .swiper-slide {
     height: 100%;
   }
 
-  .slick-list {
-    height: 100%;
-  }
-
-  .slick-track {
-    height: 100%;
-  }
-
-  .slick-slide {
-    height: 100%;
-
-    > div {
-      height: 100%;
-    }
-  }
-
-  .slick-dots {
+  .swiper-pagination {
     bottom: 30px;
+  }
 
-    li button:before {
-      color: white;
-      font-size: 12px;
-      opacity: 0.5;
-    }
+  .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.5);
+    width: 12px;
+    height: 12px;
+    opacity: 0.5;
+  }
 
-    li.slick-active button:before {
-      opacity: 1;
-    }
+  .swiper-pagination-bullet-active {
+    background: white;
+    opacity: 1;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none; /* Hide default arrows, we'll use custom ones */
   }
 `;
 
@@ -252,36 +254,6 @@ const ChevronRight = () => (
   </svg>
 );
 
-interface CustomArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
-
-const PrevArrow: React.FC<CustomArrowProps> = ({ onClick }) => (
-  <CustomArrow
-    $direction="prev"
-    onClick={onClick}
-    aria-label="Previous slide"
-    role="button"
-    tabIndex={0}
-  >
-    <ChevronLeft />
-  </CustomArrow>
-);
-
-const NextArrow: React.FC<CustomArrowProps> = ({ onClick }) => (
-  <CustomArrow
-    $direction="next"
-    onClick={onClick}
-    aria-label="Next slide"
-    role="button"
-    tabIndex={0}
-  >
-    <ChevronRight />
-  </CustomArrow>
-);
-
 interface HeroSliderProps {
   title?: string;
   subtitle?: string;
@@ -293,73 +265,73 @@ const HeroSlider: React.FC<HeroSliderProps> = ({
   subtitle = 'Paradise Found',
   showTitle = true,
 }) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    fade: true,
-    cssEase: 'ease-in-out',
-    pauseOnHover: true,
-    pauseOnFocus: true,
-    swipeToSlide: true,
-    touchMove: true,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          dots: false,
-          arrows: true,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          dots: false,
-          arrows: true,
-        },
-      },
-    ],
+  const [slides, setSlides] = useState<string[]>([]);
+  const swiperRef = useRef<SwiperType | null>(null);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('/api/hero-images');
+        const images = await response.json();
+        setSlides(images);
+      } catch (error) {
+        console.error('Error fetching hero images:', error);
+      }
+    };
+    fetchImages();
+  }, []);
+
+  const handlePrevClick = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
   };
 
-  // Generate 36 slides with the hero beach image
-  const slides = Array.from({ length: 36 }, (_, index) => ({
-    id: index + 1,
-    imageKey: 'heroBeach' as const,
-    alt: `Coconut Beach Hero Image ${index + 1}`,
-  }));
+  const handleNextClick = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
 
   return (
     <HeroSliderContainer role="region" aria-label="Hero image carousel">
-      <Slider {...settings} aria-label="Hero slides">
-        {slides.map((slide) => (
-          <div
-            key={slide.id}
-            role="group"
-            aria-label={`Slide ${slide.id} of ${slides.length}`}
-          >
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        effect="fade"
+        fadeEffect={{ crossFade: true }}
+        loop
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
             <SlideImage>
-              <OptimizedImage
-                imageKey={slide.imageKey}
-                alt={slide.alt}
-                fill
-                priority={slide.id === 1}
-                responsive={{
-                  default: '100vw',
-                }}
-                style={{
-                  objectFit: 'cover',
-                }}
-              />
+              <img src={`/images/hero/${slide}`} alt={`Slide ${index + 1}`} />
             </SlideImage>
-          </div>
+          </SwiperSlide>
         ))}
-      </Slider>
+      </Swiper>
+
+      <CustomArrow
+        $direction="prev"
+        onClick={handlePrevClick}
+        aria-label="Previous slide"
+        role="button"
+        tabIndex={0}
+      >
+        <ChevronLeft />
+      </CustomArrow>
+
+      <CustomArrow
+        $direction="next"
+        onClick={handleNextClick}
+        aria-label="Next slide"
+        role="button"
+        tabIndex={0}
+      >
+        <ChevronRight />
+      </CustomArrow>
 
       {showTitle && (
         <TitleOverlay>

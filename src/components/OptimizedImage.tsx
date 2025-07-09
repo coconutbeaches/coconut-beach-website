@@ -17,6 +17,7 @@ interface OptimizedImageProps
     default?: string;
   };
   className?: string;
+  fill?: boolean;
 }
 
 export const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -26,6 +27,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className,
   priority,
   placeholder = 'blur',
+  fill,
   ...props
 }) => {
   const imageData = getImageData(imageKey);
@@ -41,20 +43,33 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   // Determine if image should be priority based on image data or prop
   const isPriority = priority !== undefined ? priority : imageData.priority;
 
-  return (
-    <Image
-      src={imageData.src}
-      alt={altText}
-      width={imageData.width}
-      height={imageData.height}
-      blurDataURL={imageData.blurDataURL}
-      placeholder={placeholder}
-      priority={isPriority}
-      sizes={sizes}
-      className={className}
-      {...props}
-    />
-  );
+  // If fill is true, don't use width/height
+  const imageProps = fill
+    ? {
+        src: imageData.src,
+        alt: altText,
+        fill: true,
+        blurDataURL: imageData.blurDataURL,
+        placeholder,
+        priority: isPriority,
+        sizes,
+        className,
+        ...props,
+      }
+    : {
+        src: imageData.src,
+        alt: altText,
+        width: imageData.width,
+        height: imageData.height,
+        blurDataURL: imageData.blurDataURL,
+        placeholder,
+        priority: isPriority,
+        sizes,
+        className,
+        ...props,
+      };
+
+  return <Image {...imageProps} />;
 };
 
 export default OptimizedImage;
