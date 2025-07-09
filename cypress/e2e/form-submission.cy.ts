@@ -129,19 +129,21 @@ describe('Form Submission Tests', () => {
 
     it('should support keyboard navigation', () => {
       // Tab through form fields
-      cy.get('[data-testid="contact-form-name"]').focus().tab();
+      cy.get('[data-testid="contact-form-name"]')
+        .focus()
+        .trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'contact-form-email');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'contact-form-phone');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'contact-form-subject');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'contact-form-message');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'contact-form-submit');
     });
   });

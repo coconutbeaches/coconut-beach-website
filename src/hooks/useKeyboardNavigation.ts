@@ -15,7 +15,14 @@ export const useKeyboardNavigation = (
   containerRef: MutableRefObject<HTMLElement | null>,
   options: KeyboardNavigationOptions
 ) => {
-  const { isOpen, onClose, onEscape, onEnter, autoFocus = true, restoreFocus = true } = options;
+  const {
+    isOpen,
+    onClose,
+    onEscape,
+    onEnter,
+    autoFocus = true,
+    restoreFocus = true,
+  } = options;
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -47,7 +54,11 @@ export const useKeyboardNavigation = (
       switch (event.key) {
         case 'Escape':
           event.preventDefault();
-          onEscape ? onEscape() : onClose();
+          if (onEscape) {
+            onEscape();
+          } else {
+            onClose();
+          }
           break;
 
         case 'Tab':
@@ -79,15 +90,22 @@ export const useKeyboardNavigation = (
 
         case 'ArrowDown':
           event.preventDefault();
-          const currentIndex = focusableArray.indexOf(document.activeElement as HTMLElement);
+          const currentIndex = focusableArray.indexOf(
+            document.activeElement as HTMLElement
+          );
           const nextIndex = (currentIndex + 1) % focusableArray.length;
           focusableArray[nextIndex]?.focus();
           break;
 
         case 'ArrowUp':
           event.preventDefault();
-          const currentIndexUp = focusableArray.indexOf(document.activeElement as HTMLElement);
-          const prevIndex = currentIndexUp === 0 ? focusableArray.length - 1 : currentIndexUp - 1;
+          const currentIndexUp = focusableArray.indexOf(
+            document.activeElement as HTMLElement
+          );
+          const prevIndex =
+            currentIndexUp === 0
+              ? focusableArray.length - 1
+              : currentIndexUp - 1;
           focusableArray[prevIndex]?.focus();
           break;
       }
@@ -99,37 +117,45 @@ export const useKeyboardNavigation = (
     // Cleanup function
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      
+
       // Restore focus to the previously focused element
       if (restoreFocus && previousActiveElement.current) {
         previousActiveElement.current.focus();
       }
     };
-  }, [isOpen, onClose, onEscape, onEnter, autoFocus, restoreFocus, containerRef]);
+  }, [
+    isOpen,
+    onClose,
+    onEscape,
+    onEnter,
+    autoFocus,
+    restoreFocus,
+    containerRef,
+  ]);
 
   return {
     focusFirstElement: () => {
       const container = containerRef.current;
       if (!container) return;
-      
+
       const firstFocusable = container.querySelector<HTMLElement>(
         'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
-      
+
       firstFocusable?.focus();
     },
-    
+
     focusLastElement: () => {
       const container = containerRef.current;
       if (!container) return;
-      
+
       const focusableElements = container.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
-      
+
       const lastFocusable = focusableElements[focusableElements.length - 1];
       lastFocusable?.focus();
-    }
+    },
   };
 };
 

@@ -51,10 +51,14 @@ Cypress.Commands.add('compareScreenshot', (name: string, options = {}) => {
         newImage: actualPath,
         diffImage: diffPath,
         threshold,
-      }).then((result: { isEqual: boolean; diffRatio: number }) => {
-        if (!result.isEqual) {
+      }).then((result: unknown) => {
+        const comparisonResult = result as {
+          isEqual: boolean;
+          diffRatio: number;
+        };
+        if (!comparisonResult.isEqual) {
           throw new Error(
-            `Screenshot comparison failed for ${name}. Diff ratio: ${result.diffRatio}`
+            `Screenshot comparison failed for ${name}. Diff ratio: ${comparisonResult.diffRatio}`
           );
         }
       });
@@ -76,10 +80,14 @@ Cypress.Commands.add('compareScreenshot', (name: string, options = {}) => {
           newImage: actualPath,
           diffImage: diffPath,
           threshold,
-        }).then((result: { isEqual: boolean; diffRatio: number }) => {
-          if (!result.isEqual) {
+        }).then((result: unknown) => {
+          const comparisonResult = result as {
+            isEqual: boolean;
+            diffRatio: number;
+          };
+          if (!comparisonResult.isEqual) {
             throw new Error(
-              `Screenshot comparison failed for ${screenshotName}. Diff ratio: ${result.diffRatio}`
+              `Screenshot comparison failed for ${screenshotName}. Diff ratio: ${comparisonResult.diffRatio}`
             );
           }
         });

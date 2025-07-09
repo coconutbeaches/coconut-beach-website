@@ -218,13 +218,13 @@ describe('Navigation Tests', () => {
 
     it('should have proper focus management', () => {
       // Test tab order
-      cy.get('body').tab();
+      cy.get('body').trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'skip-to-content');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'nav-home');
 
-      cy.focused().tab();
+      cy.focused().trigger('keydown', { key: 'Tab' });
       cy.focused().should('have.attr', 'data-testid', 'nav-about');
     });
   });

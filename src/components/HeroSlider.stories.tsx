@@ -11,25 +11,6 @@ const meta: Meta<typeof HeroSlider> = {
     },
   },
   tags: ['autodocs'],
-  args: {
-    slides: [
-      {
-        image: '/images/hero-1.jpg',
-        title: 'Welcome to Coconut Beach',
-        subtitle: 'Paradise in Koh Phangan',
-      },
-      {
-        image: '/images/hero-2.jpg',
-        title: 'Eco-Friendly Bungalows',
-        subtitle: 'Sustainable beachfront living',
-      },
-      {
-        image: '/images/hero-3.jpg',
-        title: 'Pristine Beach Views',
-        subtitle: 'Wake up to crystal clear waters',
-      },
-    ],
-  },
 };
 
 export default meta;

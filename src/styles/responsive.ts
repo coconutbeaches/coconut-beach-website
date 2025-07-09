@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css, Interpolation } from 'styled-components';
 import { theme } from './theme';
 
 export const breakpoints = {
@@ -20,44 +20,44 @@ export const media = {
 } as const;
 
 export const mediaQuery = {
-  xs: (styles: any) => css`
+  xs: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.xs} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  sm: (styles: any) => css`
+  sm: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.sm} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  md: (styles: any) => css`
+  md: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.md} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  lg: (styles: any) => css`
+  lg: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.lg} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  xsUp: (styles: any) => css`
+  xsUp: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.xsUp} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  smUp: (styles: any) => css`
+  smUp: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.smUp} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  mdUp: (styles: any) => css`
+  mdUp: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.mdUp} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
-  lgUp: (styles: any) => css`
+  lgUp: (styles: TemplateStringsArray, ...args: Interpolation<object>[]) => css`
     @media ${media.lgUp} {
-      ${styles}
+      ${css(styles, ...args)}
     }
   `,
 } as const;
