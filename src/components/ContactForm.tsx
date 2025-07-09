@@ -26,9 +26,14 @@ const FormContainer = styled.form`
   max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.backgrounds.primary};
   border-radius: 8px;
   box-shadow: ${({ theme }) => theme.shadows.md};
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.lg};
+  }
 `;
 
 const FormGroup = styled.div`
@@ -39,7 +44,7 @@ const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.text.dark};
 `;
 
 const Input = styled.input<{ hasError?: boolean }>`
@@ -47,18 +52,18 @@ const Input = styled.input<{ hasError?: boolean }>`
   padding: 0.75rem;
   border: 2px solid
     ${({ theme, hasError }) =>
-      hasError ? theme.colors.danger : theme.colors.light};
+      hasError ? theme.palette.danger : theme.backgrounds.light};
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.palette.primary};
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.text.secondary};
   }
 `;
 
@@ -67,7 +72,7 @@ const TextArea = styled.textarea<{ hasError?: boolean }>`
   padding: 0.75rem;
   border: 2px solid
     ${({ theme, hasError }) =>
-      hasError ? theme.colors.danger : theme.colors.light};
+      hasError ? theme.palette.danger : theme.backgrounds.light};
   border-radius: 4px;
   font-size: 1rem;
   min-height: 120px;
@@ -77,22 +82,22 @@ const TextArea = styled.textarea<{ hasError?: boolean }>`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
+    border-color: ${({ theme }) => theme.palette.primary};
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.text.secondary};
   }
 `;
 
 const ErrorMessage = styled.p`
-  color: ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.palette.danger};
   font-size: 0.875rem;
   margin-top: 0.25rem;
 `;
 
 const SuccessMessage = styled.p`
-  color: ${({ theme }) => theme.colors.success};
+  color: ${({ theme }) => theme.palette.success};
   font-size: 0.875rem;
   margin-bottom: 1rem;
   text-align: center;
@@ -145,8 +150,11 @@ export const ContactForm: React.FC = () => {
           type="text"
           placeholder="Enter your name"
           hasError={!!errors.name}
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? 'name-error' : undefined}
+          aria-required="true"
         />
-        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+        {errors.name && <ErrorMessage id="name-error" role="alert">{errors.name.message}</ErrorMessage>}
       </FormGroup>
 
       <FormGroup>
@@ -157,8 +165,11 @@ export const ContactForm: React.FC = () => {
           type="email"
           placeholder="Enter your email"
           hasError={!!errors.email}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? 'email-error' : undefined}
+          aria-required="true"
         />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        {errors.email && <ErrorMessage id="email-error" role="alert">{errors.email.message}</ErrorMessage>}
       </FormGroup>
 
       <FormGroup>
@@ -168,9 +179,12 @@ export const ContactForm: React.FC = () => {
           id="message"
           placeholder="Enter your message"
           hasError={!!errors.message}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? 'message-error' : undefined}
+          aria-required="true"
         />
         {errors.message && (
-          <ErrorMessage>{errors.message.message}</ErrorMessage>
+          <ErrorMessage id="message-error" role="alert">{errors.message.message}</ErrorMessage>
         )}
       </FormGroup>
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { mediaQuery, responsiveFontSizes, responsiveSpacing } from '../styles/responsive';
 
 const HeaderContainer = styled.header`
   background: #fff;
@@ -17,9 +18,9 @@ const TopBar = styled.div`
   padding: 8px 0;
   font-size: 14px;
   
-  @media (max-width: 768px) {
+  ${mediaQuery.md`
     display: none;
-  }
+  `}
 `;
 
 const TopBarContent = styled.div`
@@ -28,7 +29,7 @@ const TopBarContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  ${responsiveSpacing.container}
 `;
 
 const ContactInfo = styled.div`
@@ -52,43 +53,57 @@ const MainHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  ${responsiveSpacing.container}
+  padding-top: ${({ theme }) => theme.spacing.lg};
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
   
-  @media (max-width: 768px) {
+  ${mediaQuery.md`
     flex-direction: column;
-    gap: 20px;
-  }
+    gap: ${({ theme }) => theme.spacing.lg};
+  `}
 `;
 
 const Logo = styled.div`
   h1 {
-    font-size: 28px;
+    font-size: ${({ theme }) => theme.sizes['2xl']};
     font-weight: 700;
     color: #2c3e50;
     margin: 0;
     
-    @media (max-width: 768px) {
-      font-size: 24px;
+    ${mediaQuery.lg`
+      font-size: ${({ theme }) => theme.sizes.xl};
+    `}
+    
+    ${mediaQuery.md`
+      font-size: ${({ theme }) => theme.sizes.lg};
       text-align: center;
-    }
+    `}
+    
+    ${mediaQuery.sm`
+      font-size: ${({ theme }) => theme.sizes.md};
+    `}
   }
   
   p {
     color: #7f8c8d;
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.sizes.sm};
     margin: 5px 0 0 0;
     
-    @media (max-width: 768px) {
+    ${mediaQuery.md`
       text-align: center;
-    }
+    `}
+    
+    ${mediaQuery.xs`
+      font-size: ${({ theme }) => theme.sizes.xs};
+    `}
   }
 `;
 
 const Navigation = styled.nav<{ isOpen: boolean }>`
   display: flex;
-  gap: 30px;
+  gap: ${({ theme }) => theme.spacing.xl};
   
-  @media (max-width: 768px) {
+  ${mediaQuery.md`
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
@@ -96,47 +111,53 @@ const Navigation = styled.nav<{ isOpen: boolean }>`
     left: 0;
     right: 0;
     background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    gap: 20px;
-  }
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    padding: ${({ theme }) => theme.spacing.lg};
+    gap: ${({ theme }) => theme.spacing.lg};
+  `}
 `;
 
 const NavLink = styled.a`
   color: #2c3e50;
   text-decoration: none;
   font-weight: 500;
+  font-size: ${({ theme }) => theme.sizes.md};
   transition: color 0.3s;
   cursor: pointer;
   
   &:hover {
-    color: #3498db;
+    color: ${({ theme }) => theme.palette.coral};
   }
   
-  @media (max-width: 768px) {
-    padding: 10px 0;
+  ${mediaQuery.md`
+    padding: ${({ theme }) => theme.spacing.sm} 0;
     border-bottom: 1px solid #ecf0f1;
     
     &:last-child {
       border-bottom: none;
     }
-  }
+  `}
+  
+  ${mediaQuery.sm`
+    font-size: ${({ theme }) => theme.sizes.sm};
+  `}
 `;
 
 const MobileMenuButton = styled.button`
   display: none;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.sizes.lg};
   cursor: pointer;
   color: #2c3e50;
+  padding: ${({ theme }) => theme.spacing.xs};
   
-  @media (max-width: 768px) {
+  ${mediaQuery.md`
     display: block;
     position: absolute;
-    right: 20px;
-    top: 20px;
-  }
+    right: ${({ theme }) => theme.spacing.lg};
+    top: ${({ theme }) => theme.spacing.lg};
+  `}
 `;
 
 const HeaderWrapper = styled.div`
