@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    styledComponents: true,
+  },
   images: {
-    // Enable responsive images
-    responsive: true,
     // Define device sizes for responsive images
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     // Define image sizes for responsive images
@@ -11,7 +12,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     // Minimum cache time for optimized images (in seconds)
     minimumCacheTTL: 60,
-    // Enable image optimization
+    // Enable image optimization (default is true)
     unoptimized: false,
     // Domains for external images (if needed in the future)
     domains: [],
@@ -24,8 +25,6 @@ const nextConfig = {
   compress: true,
   // Optimize for production
   productionBrowserSourceMaps: false,
-  // Enable SWC minification
-  swcMinify: true,
   // Security headers
   async headers() {
     return [
@@ -55,8 +54,16 @@ const nextConfig = {
         ],
       },
       {
-        source:
-          '/(.*\\.(js|css|png|jpg|jpeg|gif|webp|avif|svg|ico|woff|woff2|ttf|eot))',
+        source: '/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
         headers: [
           {
             key: 'Cache-Control',
