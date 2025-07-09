@@ -1,0 +1,202 @@
+{
+  "bungalows": [
+    {
+      "id": "seaview-deluxe",
+      "name": "Seaview Deluxe",
+      "imageKey": "seaview2Bed",
+      "description": "Spacious bungalow with stunning ocean views, perfect for couples or small families seeking comfort and tranquility.",
+      "specs": {
+        "size": "45 sqm",
+        "beds": "2 beds",
+        "occupancy": "4 guests",
+        "bedConfiguration": "1 King bed, 1 Single bed"
+      },
+      "features": [
+        "Air conditioning",
+        "Private balcony with ocean view",
+        "En-suite bathroom",
+        "Mini-fridge",
+        "Free Wi-Fi",
+        "Coffee/tea making facilities",
+        "Safe deposit box",
+        "Mosquito nets"
+      ],
+      "priceRange": {
+        "low": 1200,
+        "high": 2000,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "deluxe"
+    },
+    {
+      "id": "beachfront-house",
+      "name": "Beachfront House",
+      "imageKey": "beachfrontHouse",
+      "description": "Luxurious beachfront accommodation with direct beach access, ideal for families or groups wanting premium amenities.",
+      "specs": {
+        "size": "65 sqm",
+        "beds": "3 beds",
+        "occupancy": "6 guests",
+        "bedConfiguration": "2 King beds, 2 Single beds"
+      },
+      "features": [
+        "Air conditioning",
+        "Direct beach access",
+        "Private terrace",
+        "Kitchenette",
+        "Living area",
+        "En-suite bathroom",
+        "Free Wi-Fi",
+        "Beach chairs included",
+        "BBQ facilities",
+        "Safe deposit box"
+      ],
+      "priceRange": {
+        "low": 2500,
+        "high": 4000,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "premium"
+    },
+    {
+      "id": "jungle-retreat",
+      "name": "Jungle Retreat",
+      "imageKey": "seaviewJungle",
+      "description": "Intimate bungalow nestled in tropical gardens, perfect for couples seeking a romantic getaway surrounded by nature.",
+      "specs": {
+        "size": "35 sqm",
+        "beds": "1 bed",
+        "occupancy": "2 guests",
+        "bedConfiguration": "1 King bed"
+      },
+      "features": [
+        "Air conditioning",
+        "Garden view",
+        "Private bathroom",
+        "Outdoor shower",
+        "Mini-fridge",
+        "Free Wi-Fi",
+        "Coffee/tea making facilities",
+        "Mosquito nets",
+        "Hammock on terrace"
+      ],
+      "priceRange": {
+        "low": 800,
+        "high": 1500,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "standard"
+    },
+    {
+      "id": "family-suite",
+      "name": "Family Suite",
+      "imageKey": "twoBedroomTwoBath",
+      "description": "Spacious family accommodation with multiple bedrooms and bathrooms, perfect for larger groups or families.",
+      "specs": {
+        "size": "55 sqm",
+        "beds": "2 beds",
+        "occupancy": "5 guests",
+        "bedConfiguration": "1 King bed, 1 Queen bed, 1 Single bed"
+      },
+      "features": [
+        "Air conditioning",
+        "Two separate bedrooms",
+        "Two bathrooms",
+        "Living area",
+        "Kitchenette",
+        "Private balcony",
+        "Free Wi-Fi",
+        "Mini-fridge",
+        "Safe deposit box",
+        "Family-friendly amenities"
+      ],
+      "priceRange": {
+        "low": 1800,
+        "high": 3000,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "family"
+    },
+    {
+      "id": "premium-bungalow",
+      "name": "Premium Bungalow",
+      "imageKey": "a3Bungalow",
+      "description": "Upgraded bungalow with modern amenities and stylish design, ideal for discerning travelers.",
+      "specs": {
+        "size": "40 sqm",
+        "beds": "2 beds",
+        "occupancy": "3 guests",
+        "bedConfiguration": "1 King bed, 1 Single bed"
+      },
+      "features": [
+        "Air conditioning",
+        "Modern design",
+        "Private terrace",
+        "En-suite bathroom",
+        "Premium bedding",
+        "Mini-fridge",
+        "Free Wi-Fi",
+        "Coffee/tea making facilities",
+        "Safe deposit box",
+        "Daily housekeeping"
+      ],
+      "priceRange": {
+        "low": 1500,
+        "high": 2500,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "premium"
+    },
+    {
+      "id": "ocean-view-suite",
+      "name": "Ocean View Suite",
+      "imageKey": "aboutResort",
+      "description": "Elegant suite with panoramic ocean views and luxury amenities for the ultimate island experience.",
+      "specs": {
+        "size": "50 sqm",
+        "beds": "2 beds",
+        "occupancy": "4 guests",
+        "bedConfiguration": "1 King bed, 1 Queen bed"
+      },
+      "features": [
+        "Air conditioning",
+        "Panoramic ocean views",
+        "Private balcony",
+        "Luxury bathroom",
+        "Living area",
+        "Mini-bar",
+        "Free Wi-Fi",
+        "Premium amenities",
+        "Safe deposit box",
+        "Turndown service"
+      ],
+      "priceRange": {
+        "low": 2000,
+        "high": 3500,
+        "currency": "THB",
+        "period": "night"
+      },
+      "availability": true,
+      "category": "suite"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2024-01-01T00:00:00Z",
+    "version": "1.0",
+    "totalBungalows": 6,
+    "categories": ["standard", "deluxe", "premium", "family", "suite"],
+    "currency": "THB",
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00"
+  }
+}

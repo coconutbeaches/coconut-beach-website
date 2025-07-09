@@ -18,7 +18,7 @@ const FooterContent = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -43,15 +43,15 @@ const ReviewsSlider = styled(Slider)`
     outline: none;
     padding: 0 10px;
   }
-  
+
   .slick-dots {
     bottom: -30px;
-    
+
     li button:before {
       color: #ff6b6b;
       font-size: 8px;
     }
-    
+
     li.slick-active button:before {
       color: #ff6b6b;
     }
@@ -107,7 +107,7 @@ const ContactLink = styled.a`
   color: #5a6c7d;
   text-decoration: none;
   transition: color 0.3s;
-  
+
   &:hover {
     color: #ff6b6b;
   }
@@ -131,7 +131,7 @@ const SocialIcon = styled.a`
   text-decoration: none;
   font-size: 16px;
   transition: background-color 0.3s;
-  
+
   &:hover {
     background: #ff5252;
   }
@@ -152,7 +152,7 @@ const GalleryItem = styled.div`
   cursor: pointer;
   overflow: hidden;
   transition: transform 0.3s;
-  
+
   &:hover {
     transform: scale(1.05);
   }
@@ -171,7 +171,7 @@ const LightboxOverlay = styled.div<{ isOpen: boolean }>`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.9);
-  display: ${props => props.isOpen ? 'flex' : 'none'};
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -199,7 +199,7 @@ const CloseButton = styled.button`
   font-size: 24px;
   cursor: pointer;
   padding: 5px;
-  
+
   &:hover {
     color: #ff6b6b;
   }
@@ -220,20 +220,20 @@ const Footer: React.FC = () => {
 
   const reviews = [
     {
-      text: "Absolutely loved our stay! The location is breathtaking and the service was exceptional.",
-      name: "John D.",
+      text: 'Absolutely loved our stay! The location is breathtaking and the service was exceptional.',
+      name: 'John D.',
     },
     {
-      text: "Perfect getaway. The bungalows are quaint yet modern. Woke up to ocean sounds every morning.",
-      name: "Lara S.",
+      text: 'Perfect getaway. The bungalows are quaint yet modern. Woke up to ocean sounds every morning.',
+      name: 'Lara S.',
     },
     {
-      text: "A hidden gem! Stunning views and staff made us feel right at home.",
-      name: "Krit P.",
+      text: 'A hidden gem! Stunning views and staff made us feel right at home.',
+      name: 'Krit P.',
     },
     {
-      text: "Peaceful and beautiful place. Perfect for unwinding and enjoying natural beauty.",
-      name: "Emma T.",
+      text: 'Peaceful and beautiful place. Perfect for unwinding and enjoying natural beauty.',
+      name: 'Emma T.',
     },
   ];
 
@@ -276,7 +276,7 @@ const Footer: React.FC = () => {
           <ReviewsSlider {...sliderSettings}>
             {reviews.map((review, index) => (
               <ReviewCard key={index}>
-                <ReviewText>"{review.text}"</ReviewText>
+                <ReviewText>&quot;{review.text}&quot;</ReviewText>
                 <ReviewerName>- {review.name}</ReviewerName>
               </ReviewCard>
             ))}
@@ -373,10 +373,7 @@ const Footer: React.FC = () => {
         aria-label="Image lightbox"
       >
         <LightboxContent onClick={(e) => e.stopPropagation()}>
-          <CloseButton
-            onClick={closeLightbox}
-            aria-label="Close lightbox"
-          >
+          <CloseButton onClick={closeLightbox} aria-label="Close lightbox">
             ×
           </CloseButton>
           <LightboxImage src={currentImage} alt="Gallery image" />
@@ -384,7 +381,10 @@ const Footer: React.FC = () => {
       </LightboxOverlay>
 
       <Copyright>
-        <p>&copy; {new Date().getFullYear()} Coconut Beach Bungalows. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Coconut Beach Bungalows. All rights
+          reserved.
+        </p>
         <p>Made with ❤️ on Koh Phangan</p>
       </Copyright>
     </FooterContainer>
@@ -392,4 +392,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
