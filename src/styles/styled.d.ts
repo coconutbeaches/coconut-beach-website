@@ -41,6 +41,8 @@ declare module 'styled-components' {
       '3xl': string;
       '4xl': string;
       '5xl': string;
+      '6xl': string;
+      '7xl': string;
     };
     breakpoints: {
       xs: string;
@@ -65,6 +67,7 @@ declare module 'styled-components' {
       md: string;
       lg: string;
       xl: string;
+      coral: string;
     };
   }
 }
